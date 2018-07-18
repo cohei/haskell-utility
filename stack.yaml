@@ -1,0 +1,5 @@
+resolver: lts-12.0
+packages:
+  - .
+extra-deps:
+  - bool-extras-0.4.0

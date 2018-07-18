@@ -1,0 +1,28 @@
+name:                utility
+version:             0.1.0.0
+github:              "cohei/utility"
+license:             BSD3
+author:              "TANIGUCHI Kohei"
+maintainer:          "a.d.xvii.kal.mai@gmail.com"
+copyright:           "2018 TANIGUCHI Kohei"
+
+dependencies:
+  - base >= 4.7 && < 5
+  - bool-extras
+
+library:
+  source-dirs: src
+
+tests:
+  doctest:
+    source-dirs: test
+    main: doctests.hs
+    other-modules: []
+    dependencies:
+      - doctest
+  hspec:
+    source-dirs: test
+    main: Spec.hs
+    dependencies:
+      - utility
+      - hspec
