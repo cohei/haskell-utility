@@ -36,6 +36,9 @@ owl :: (c -> d) -> (a -> b -> c) -> a -> b -> d
 owl = (.).(.)
 
 -- | Get digits of an integer.
+--
+-- >>> toDigits 1234
+-- [1,2,3,4]
 toDigits :: Integral a => a -> [a]
 toDigits = reverse . unfoldr step
   where
@@ -44,6 +47,9 @@ toDigits = reverse . unfoldr step
       return $ swap $ divMod n 10
 
 -- | Convert digits to an integer.
+--
+-- >>> fromDigits [1, 2, 3, 4]
+-- 1234
 fromDigits :: Integral a => [a] -> a
 fromDigits = foldl ((+) . (10*)) 0
 
@@ -85,6 +91,9 @@ lastn :: Int -> [a] -> [a]
 lastn = (diff <*>) . drop
 
 -- | Apply f on both tuple elements.
+--
+-- >>> mapTuple (+ 1) (3, 4)
+-- (4,5)
 mapTuple :: (a -> b) -> (a,a) -> (b,b)
 mapTuple = join (***)
 
@@ -93,11 +102,17 @@ removeSharedPrefix :: Eq a => [a] -> [a] -> ([a], [a])
 removeSharedPrefix = (unzip .) . (dropWhile (uncurry (==)) .) . zip
 
 -- | Return elements in odd positions.
+--
+-- >>> odds [1..10]
+-- [1,3,5,7,9]
 odds :: [a] -> [a]
 odds [] = []
 odds (x:xs) = x : evens xs
 
 -- | Return elements in even positions.
+--
+-- >>> evens [1..10]
+-- [2,4,6,8,10]
 evens :: [a] -> [a]
 evens [] = []
 evens (_:xs) = odds xs
