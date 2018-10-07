@@ -1,8 +1,8 @@
 module UtilitySpec where
 
-import Test.Hspec
+import           Test.Hspec (Spec, describe, it, shouldBe)
 
-import Utility
+import           Utility    (y)
 
 spec :: Spec
 spec = do

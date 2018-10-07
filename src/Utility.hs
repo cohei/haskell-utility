@@ -17,12 +17,12 @@ module Utility
     , concatMapM
     ) where
 
-import Control.Applicative ( (<*>) )
-import Control.Arrow       ( (***) )
-import Control.Monad       ( guard, MonadPlus(mzero), liftM, join )
-import Data.Bool.Extras    ( bool )
-import Data.List           ( unfoldr )
-import Data.Tuple          ( swap )
+import           Control.Applicative ((<*>))
+import           Control.Arrow       ((***))
+import           Control.Monad       (MonadPlus (mzero), guard, join, liftM)
+import           Data.Bool.Extras    (bool)
+import           Data.List           (unfoldr)
+import           Data.Tuple          (swap)
 
 data Rec a = In { out :: Rec a -> a }
 
@@ -67,7 +67,7 @@ chop n = unfoldr $ fmap (splitAt n) . ensure (not . null)
 
 -- | Return @True@ if the list has all the same elements.
 allSame :: Eq a => [a] -> Bool
-allSame [] = True
+allSame []     = True
 allSame (x:xs) = all (x==) xs
 
 -- | Compute implication.
@@ -81,8 +81,8 @@ concatMapM f = liftM concat . mapM f
 
 -- | Get rear part of the longer list.
 diff :: [a] -> [a] -> [a]
-diff [] ys = ys
-diff xs [] = xs
+diff [] ys         = ys
+diff xs []         = xs
 diff (_:xs) (_:ys) = diff xs ys
 
 -- | Get last @n@ elements of the list.
@@ -106,7 +106,7 @@ removeSharedPrefix = (unzip .) . (dropWhile (uncurry (==)) .) . zip
 -- >>> odds [1..10]
 -- [1,3,5,7,9]
 odds :: [a] -> [a]
-odds [] = []
+odds []     = []
 odds (x:xs) = x : evens xs
 
 -- | Return elements in even positions.
@@ -114,7 +114,7 @@ odds (x:xs) = x : evens xs
 -- >>> evens [1..10]
 -- [2,4,6,8,10]
 evens :: [a] -> [a]
-evens [] = []
+evens []     = []
 evens (_:xs) = odds xs
 
 -- | Group consequent series.
@@ -126,4 +126,4 @@ sequentialGroupBy p = foldr f []
   where
     f :: a -> [[a]] -> [[a]]
     f x (ys@(y':_):yss) | p x y' = (x:ys) : yss
-    f x yss                      = [x]    : yss
+    f x yss             = [x]    : yss
