@@ -5,4 +5,11 @@ jobs:
       - image: haskell:8.4.3
     steps:
       - checkout
+      - restore_cache:
+         keys:
+           - stack
       - run: stack test
+      - save_cache:
+          key: stack
+          paths:
+            - "~/.stack"
