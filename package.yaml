@@ -1,6 +1,6 @@
 name:                utility
 version:             0.1.0.0
-github:              "cohei/utility"
+github:              "cohei/haskell-utility"
 license:             BSD3
 author:              "TANIGUCHI Kohei"
 maintainer:          "a.d.xvii.kal.mai@gmail.com"
