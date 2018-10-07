@@ -13,6 +13,7 @@ spec = do
   describe "y" $ do
     it "calculate fibonacci number" $ do
       let
+        fibF :: (Int -> Int) -> Int -> Int
         fibF _ 0 = 0
         fibF _ 1 = 1
         fibF f n = f (n - 1) + f (n - 2)

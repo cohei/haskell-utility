@@ -77,7 +77,7 @@ concatMapM f = liftM concat . mapM f
 diff :: [a] -> [a] -> [a]
 diff [] ys = ys
 diff xs [] = xs
-diff (x:xs) (y:ys) = diff xs ys
+diff (_:xs) (_:ys) = diff xs ys
 
 -- | Get last @n@ elements of the list.
 lastn :: Int -> [a] -> [a]
@@ -110,5 +110,5 @@ sequentialGroupBy :: forall a. (a -> a -> Bool) -> [a] -> [[a]]
 sequentialGroupBy p = foldr f []
   where
     f :: a -> [[a]] -> [[a]]
-    f x (ys@(y:_):yss) | p x y = (x:ys) : yss
-    f x yss                    = [x]    : yss
+    f x (ys@(y':_):yss) | p x y' = (x:ys) : yss
+    f x yss                      = [x]    : yss

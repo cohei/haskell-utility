@@ -10,6 +10,10 @@ dependencies:
   - base >= 4.7 && < 5
   - bool-extras
 
+ghc-options:
+  - -Wall
+  - -Werror
+
 library:
   source-dirs: src
   ghc-options: -O0
