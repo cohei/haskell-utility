@@ -12,6 +12,7 @@ dependencies:
 
 library:
   source-dirs: src
+  ghc-options: -O0
 
 tests:
   doctest:

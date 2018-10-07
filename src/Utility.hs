@@ -2,7 +2,7 @@
 module Utility
     (
     -- * Combinators
-      {- y , -} owl
+      y, owl
     -- * for digits
     , toDigits, fromDigits
     -- * for MonadPlus
