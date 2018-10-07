@@ -8,7 +8,6 @@ copyright:           "2018 TANIGUCHI Kohei"
 
 dependencies:
   - base >= 4.7 && < 5
-  - bool-extras
 
 ghc-options:
   - -Wall

@@ -20,7 +20,7 @@ module Utility
 import           Control.Applicative ((<*>))
 import           Control.Arrow       ((***))
 import           Control.Monad       (MonadPlus (mzero), guard, join, liftM)
-import           Data.Bool.Extras    (bool)
+import           Data.Bool           (bool)
 import           Data.List           (unfoldr)
 import           Data.Tuple          (swap)
 
