@@ -13,3 +13,7 @@ jobs:
           key: stack
           paths:
             - "~/.stack"
+      - run: stack haddock --haddock-arguments="--odir=haddock"
+      - store_artifacts:
+          path: haddock
+          destination: haddock
