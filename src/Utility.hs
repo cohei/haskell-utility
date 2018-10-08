@@ -5,8 +5,8 @@ module Utility
       y, owl
     -- * for digits
     , toDigits, fromDigits
-    -- * for MonadPlus
-    , whenP, ensure
+    -- * for Alternative
+    , whenA, ensure
     -- * for lists
     , chop, allSame, diff, lastn, removeSharedPrefix, odds, evens, sequentialGroupBy
     -- * for tuples
@@ -17,9 +17,9 @@ module Utility
     , concatMapM
     ) where
 
-import           Control.Applicative ((<*>))
+import           Control.Applicative (Alternative (empty), (<*>))
 import           Control.Arrow       ((***))
-import           Control.Monad       (MonadPlus (mzero), guard, join, liftM)
+import           Control.Monad       (guard, join, liftM)
 import           Data.Bool           (bool)
 import           Data.List           (unfoldr)
 import           Data.Tuple          (swap)
@@ -53,13 +53,13 @@ toDigits = reverse . unfoldr step
 fromDigits :: Integral a => [a] -> a
 fromDigits = foldl ((+) . (10*)) 0
 
--- | Capsulate value in `MonadPlus`.
-whenP :: MonadPlus m => a -> Bool -> m a
-whenP = bool mzero . return
+-- | Capsulate value in `Alternative`.
+whenA :: Alternative f => a -> Bool -> f a
+whenA = bool empty . pure
 
--- | `whenP` with a predicate.
-ensure :: MonadPlus m => (a -> Bool) -> a -> m a
-ensure = (whenP <*>)
+-- | `whenA` with a predicate.
+ensure :: Alternative m => (a -> Bool) -> a -> m a
+ensure = (whenA <*>)
 
 -- | Chop a list to lists of every @n@ elements.
 chop :: Int -> [a] -> [[a]]
