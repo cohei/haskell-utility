@@ -3,8 +3,8 @@ module Utility
     (
     -- * Combinators
       y, owl
-    -- * for digits
-    , toDigits, fromDigits
+    -- * for numbers
+    , toDigits, fromDigits, primeFactors, primes
     -- * for Alternative
     , whenA, ensure
     -- * for lists
@@ -121,3 +121,24 @@ sequentialGroupBy p = foldr f []
     f :: a -> [[a]] -> [[a]]
     f x (ys@(y':_):yss) | p x y' = (x:ys) : yss
     f x yss             = [x]    : yss
+
+-- | List of prime numbers.
+--
+-- >>> take 10 primes
+-- [2,3,5,7,11,13,17,19,23,29]
+primes :: Integral a => [a]
+primes = 2 : filter (\n -> head (primeFactors n) == n) [3, 5 ..]
+
+-- | List prime factors.
+--
+-- >>> primeFactors 12312
+-- [2,2,2,3,3,3,3,19]
+primeFactors :: Integral a => a -> [a]
+primeFactors = primeFactors' primes
+  where
+    primeFactors' pps@(p:ps) n
+      | n < 2              = []
+      | n < p ^ (2 :: Int) = [n]  -- stop early
+      | n `mod` p == 0     = p : primeFactors' pps (n `div` p)
+      | otherwise          = primeFactors' ps n
+    primeFactors' _ _ = error "`primes` is a infinite list"
