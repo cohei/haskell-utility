@@ -13,13 +13,11 @@ module Utility
     , mapTuple
     -- * for boolean
     , implies
-    -- * for Monad
-    , concatMapM
     ) where
 
 import           Control.Applicative (Alternative (empty), (<*>))
 import           Control.Arrow       ((***))
-import           Control.Monad       (guard, join, liftM)
+import           Control.Monad       (guard, join)
 import           Data.Bool           (bool)
 import           Data.List           (unfoldr)
 import           Data.Tuple          (swap)
@@ -74,10 +72,6 @@ allSame (x:xs) = all (x==) xs
 implies :: Bool -> Bool -> Bool
 implies True False = False
 implies _    _     = True
-
--- | `mapM` like concatMap.
-concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
-concatMapM f = liftM concat . mapM f
 
 -- | Get rear part of the longer list.
 diff :: [a] -> [a] -> [a]
