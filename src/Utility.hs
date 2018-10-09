@@ -21,13 +21,11 @@ import           Control.Monad       (guard, join)
 import           Data.Bool           (bool)
 import           Data.List           (unfoldr)
 import           Data.Tuple          (swap)
-
-data Rec a = In { out :: Rec a -> a }
+import           Unsafe.Coerce       (unsafeCoerce)
 
 -- | Y combinator.
 y :: (a -> a) -> a
-{-# NOINLINE y #-}
-y f = (\x -> f (out x x)) (In (\x -> f (out x x)))
+y f = (\x -> f (unsafeCoerce x x)) (\x -> f (unsafeCoerce x x))
 
 -- | Combine an unary function and a binary function as @\\x y -> f (g x y) == owl f g@ .
 owl :: (c -> d) -> (a -> b -> c) -> a -> b -> d
