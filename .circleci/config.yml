@@ -10,6 +10,7 @@ jobs:
            - stack-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
            - stack-{{ checksum "stack.yaml" }}
            - stack
+      - run: stack setup  # install GHC 8.4.4
       - run: stack test
       - save_cache:
           key: stack-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
