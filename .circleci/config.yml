@@ -7,10 +7,12 @@ jobs:
       - checkout
       - restore_cache:
          keys:
+           - stack-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
+           - stack-{{ checksum "stack.yaml" }}
            - stack
       - run: stack test
       - save_cache:
-          key: stack
+          key: stack-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
           paths:
             - "~/.stack"
       - run: stack haddock --haddock-arguments="--odir=haddock"
