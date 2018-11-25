@@ -9,6 +9,7 @@ module Utility
     , whenA, ensure
     -- * for lists
     , chop, allSame, diff, lastn, removeSharedPrefix, odds, evens, sequentialGroupBy
+    , combinations, permutations
     -- * for tuples
     , mapTuple
     -- * for boolean
@@ -123,6 +124,29 @@ sequentialGroupBy p = foldr f []
     f :: a -> [[a]] -> [[a]]
     f x (ys@(y':_):yss) | p x y' = (x:ys) : yss
     f x yss             = [x]    : yss
+
+-- | List combinations of provided elements
+--
+-- >>> combinations 2 [1..4]
+-- [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
+combinations :: Int -> [a] -> [[a]]
+combinations 0 _      = [[]]
+combinations _ []     = []
+combinations n (x:xs) = map (x:) (combinations (n - 1) xs) ++ combinations n xs
+
+-- | List permutations of provided elements
+--
+-- >>> permutations 2 [1..3]
+-- [[1,2],[1,3],[2,1],[2,3],[3,1],[3,2]]
+permutations :: Int -> [a] -> [[a]]
+permutations 0 _  = [[]]
+permutations _ [] = [[]]
+permutations n xs = select xs >>= \(y', ys) -> map (y':) (permutations (n - 1) ys)
+
+select :: [a] -> [(a, [a])]
+select []     = undefined
+select [x]    = [(x, [])]
+select (x:xs) = (x, xs) : map (\(y', ys) -> (y', x:ys)) (select xs)
 
 -- | List of prime numbers.
 --
