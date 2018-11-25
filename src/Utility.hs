@@ -33,21 +33,25 @@ owl = (.).(.)
 
 -- | Get digits of an integer.
 --
--- >>> toDigits 1234
+-- >>> toDigits 10 1234
 -- [1,2,3,4]
-toDigits :: Integral a => a -> [a]
-toDigits = reverse . unfoldr step
+-- >>> toDigits 2 42
+-- [1,0,1,0,1,0]
+toDigits :: Integral a => a -> a -> [a]
+toDigits base = reverse . unfoldr step
   where
     step n = do
       guard $ n /= 0
-      return $ swap $ divMod n 10
+      return $ swap $ divMod n base
 
 -- | Convert digits to an integer.
 --
--- >>> fromDigits [1, 2, 3, 4]
+-- >>> fromDigits 10 [1, 2, 3, 4]
 -- 1234
-fromDigits :: Integral a => [a] -> a
-fromDigits = foldl ((+) . (10*)) 0
+-- >>> fromDigits 2 [1, 0, 1, 0, 1, 0]
+-- 42
+fromDigits :: Integral a => a -> [a] -> a
+fromDigits base = foldl ((+) . (base *)) 0
 
 -- | Capsulate value in `Alternative`.
 whenA :: Alternative f => a -> Bool -> f a
