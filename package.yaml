@@ -30,3 +30,5 @@ tests:
     dependencies:
       - utility
       - hspec
+    build-tools:
+      - hspec-discover

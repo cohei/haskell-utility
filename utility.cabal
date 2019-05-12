@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.0.
+-- This file has been generated from package.yaml by hpack version 0.31.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b1c5c03ccd1c569c7d795e6e3fec6805a8987b188cfbdb21243441cae4f958bb
+-- hash: a7337984c5c7cfe2bd2837615035524151aafef36ce822570d91c531be1a4af5
 
 name:           utility
 version:        0.1.0.0
@@ -53,6 +53,8 @@ test-suite hspec
   hs-source-dirs:
       test
   ghc-options: -Wall -Werror
+  build-tool-depends:
+      hspec-discover:hspec-discover
   build-depends:
       base >=4.7 && <5
     , hspec

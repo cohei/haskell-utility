@@ -2,21 +2,20 @@ version: 2
 jobs:
   build:
     docker:
-      - image: haskell:8.4.3
+      - image: haskell:8.6.3
     steps:
       - checkout
       - restore_cache:
          keys:
-           - stack-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
-           - stack-{{ checksum "stack.yaml" }}
-           - stack
-      - run: stack setup  # install GHC 8.4.4
-      - run: stack test
+           - dependency-{{ checksum "package.yaml" }}
+           - dependency
+      - run: cabal new-update && cabal new-install --overwrite-policy=always hpack
+      - run: hpack && HSPEC_OPTIONS=--color cabal new-test
       - save_cache:
-          key: stack-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
+          key: dependency-{{ checksum "package.yaml" }}
           paths:
-            - "~/.stack"
-      - run: stack haddock --haddock-arguments="--odir=haddock"
+            - "~/.cabal"
+      - run: cabal new-haddock --haddock-option=--odir=haddock
       - store_artifacts:
           path: haddock
           destination: haddock
