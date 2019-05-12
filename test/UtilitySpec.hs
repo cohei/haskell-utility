@@ -1,12 +1,12 @@
-module UtilitySpec where
+module UtilitySpec (spec) where
 
 import           Test.Hspec (Spec, describe, it, shouldBe)
 
 import           Utility    (y)
 
 spec :: Spec
-spec = do
-  describe "y" $ do
+spec =
+  describe "y" $
     it "calculate fibonacci number" $ do
       let
         fibF :: (Int -> Int) -> Int -> Int

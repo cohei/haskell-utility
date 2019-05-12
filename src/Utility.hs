@@ -38,9 +38,10 @@ owl = (.).(.)
 -- [1,2,3,4]
 -- >>> toDigits 2 42
 -- [1,0,1,0,1,0]
-toDigits :: Integral a => a -> a -> [a]
+toDigits :: forall a. Integral a => a -> a -> [a]
 toDigits base = reverse . unfoldr step
   where
+    step :: (Monad m, Alternative m) => a -> m (a, a)
     step n = do
       guard $ n /= 0
       return $ swap $ divMod n base
@@ -162,6 +163,7 @@ primes = 2 : filter (\n -> head (primeFactors n) == n) [3, 5 ..]
 primeFactors :: Integral a => a -> [a]
 primeFactors = primeFactors' primes
   where
+    primeFactors' :: Integral a => [a] -> a -> [a]
     primeFactors' pps@(p:ps) n
       | n < 2              = []
       | n < p ^ (2 :: Int) = [n]  -- stop early
