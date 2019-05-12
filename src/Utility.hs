@@ -4,7 +4,7 @@ module Utility
     -- * Combinators
       y, owl
     -- * for numbers
-    , toDigits, fromDigits, primeFactors, primes
+    , toDigits, fromDigits, primeFactors, primes, factors
     -- * for Alternative
     , whenA, ensure
     -- * for lists
@@ -20,7 +20,7 @@ import           Control.Applicative (Alternative (empty), (<*>))
 import           Control.Arrow       ((***))
 import           Control.Monad       (guard, join)
 import           Data.Bool           (bool)
-import           Data.List           (unfoldr)
+import           Data.List           (group, inits, unfoldr)
 import           Data.Tuple          (swap)
 import           Unsafe.Coerce       (unsafeCoerce)
 
@@ -170,3 +170,10 @@ primeFactors = primeFactors' primes
       | n `mod` p == 0     = p : primeFactors' pps (n `div` p)
       | otherwise          = primeFactors' ps n
     primeFactors' _ _ = error "`primes` is a infinite list"
+
+-- | List factors of a number.
+--
+-- >>> Data.List.sort $ factors 1232
+-- [1,2,4,7,8,11,14,16,22,28,44,56,77,88,112,154,176,308,616,1232]
+factors :: Integral a => a -> [a]
+factors = map product . mapM (map product . inits) . group . primeFactors
