@@ -16,7 +16,7 @@ module Utility
     , implies
     ) where
 
-import           Control.Applicative (Alternative (empty), (<*>))
+import           Control.Applicative (Alternative (empty))
 import           Control.Arrow       ((***))
 import           Control.Monad       (guard, join)
 import           Data.Bool           (bool)
