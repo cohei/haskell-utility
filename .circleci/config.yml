@@ -2,20 +2,20 @@ version: 2
 jobs:
   build:
     docker:
-      - image: haskell:8.6.3
+      - image: haskell:8.8.1
     steps:
       - checkout
       - restore_cache:
          keys:
            - dependency-{{ checksum "utility.cabal" }}
            - dependency
-      - run: cabal new-update
-      - run: HSPEC_OPTIONS=--color cabal new-test
+      - run: cabal update
+      - run: HSPEC_OPTIONS=--color cabal test
       - save_cache:
           key: dependency-{{ checksum "utility.cabal" }}
           paths:
             - "~/.cabal"
-      - run: cabal new-haddock --haddock-option=--odir=haddock
+      - run: cabal haddock --haddock-option=--odir=haddock
       - store_artifacts:
           path: haddock
           destination: haddock
