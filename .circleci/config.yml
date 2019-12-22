@@ -7,12 +7,12 @@ jobs:
       - checkout
       - restore_cache:
          keys:
-           - dependency-{{ checksum "package.yaml" }}
+           - dependency-{{ checksum "utility.cabal" }}
            - dependency
-      - run: cabal new-update && cabal new-install --overwrite-policy=always hpack
-      - run: hpack && HSPEC_OPTIONS=--color cabal new-test
+      - run: cabal new-update
+      - run: HSPEC_OPTIONS=--color cabal new-test
       - save_cache:
-          key: dependency-{{ checksum "package.yaml" }}
+          key: dependency-{{ checksum "utility.cabal" }}
           paths:
             - "~/.cabal"
       - run: cabal new-haddock --haddock-option=--odir=haddock
