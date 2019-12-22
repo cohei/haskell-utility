@@ -9,7 +9,7 @@ module Utility
     , whenA, ensure
     -- * for lists
     , chop, allSame, diff, lastn, removeSharedPrefix, odds, evens, sequentialGroupBy
-    , combinations, permutations
+    , combinations, permutations, middle
     -- * for tuples
     , mapTuple
     -- * for boolean
@@ -150,6 +150,19 @@ select :: [a] -> [(a, [a])]
 select []     = undefined
 select [x]    = [(x, [])]
 select (x:xs) = (x, xs) : map (\(y', ys) -> (y', x:ys)) (select xs)
+
+-- | Middle element of a list
+--
+-- >>> middle [1..10]
+-- 6
+middle :: [a] -> a
+middle xs = middle' xs xs
+
+middle' :: [a] -> [a] -> a
+middle' []     _        = error "middle: empty list"
+middle' (m:_)  []       = m
+middle' (m:_)  [_]      = m
+middle' (_:ms) (_:_:xs) = middle' ms xs
 
 -- | List of prime numbers.
 --
