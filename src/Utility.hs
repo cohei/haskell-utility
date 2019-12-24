@@ -19,6 +19,7 @@ module Utility
 import           Control.Applicative (Alternative (empty))
 import           Control.Arrow       ((***))
 import           Control.Monad       (guard, join)
+import           Data.Bifunctor      (second)
 import           Data.Bool           (bool)
 import           Data.List           (group, inits, unfoldr)
 import           Data.Tuple          (swap)
@@ -147,9 +148,9 @@ permutations _ [] = [[]]
 permutations n xs = select xs >>= \(y', ys) -> map (y':) (permutations (n - 1) ys)
 
 select :: [a] -> [(a, [a])]
-select []     = undefined
+select []     = error "select: empty list"
 select [x]    = [(x, [])]
-select (x:xs) = (x, xs) : map (\(y', ys) -> (y', x:ys)) (select xs)
+select (x:xs) = (x, xs) : map (second (x:)) (select xs)
 
 -- | Middle element of a list
 --
