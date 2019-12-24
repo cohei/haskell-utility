@@ -9,7 +9,7 @@ module Utility
     , whenA, ensure
     -- * for lists
     , chop, allSame, diff, lastn, removeSharedPrefix, odds, evens, sequentialGroupBy
-    , combinations, permutations, middle
+    , combinations, permutations, partitions, foci, middle
     -- * for tuples
     , mapTuple
     -- * for boolean
@@ -151,6 +151,26 @@ select :: [a] -> [(a, [a])]
 select []     = error "select: empty list"
 select [x]    = [(x, [])]
 select (x:xs) = (x, xs) : map (second (x:)) (select xs)
+
+-- | Partition of set by k
+--
+-- >>> partitions 2 [1, 2]
+-- [[[1,2],[]],[[2],[1]],[[1],[2]],[[],[1,2]]]
+-- >>> length (partitions 3 [1..4]) == 3 ^ 4
+-- True
+partitions :: Int -> [a] -> [[[a]]]
+partitions k = foldr f [replicate k []]
+  where
+    f :: a -> [[[a]]] -> [[[a]]]
+    f x = concatMap $ map (\(xss1, xs, xss2) -> xss1 ++ [x : xs] ++ xss2) . foci
+
+-- | Focus on each element
+--
+-- >>> foci [1..3]
+-- [([],1,[2,3]),([1],2,[3]),([1,2],3,[])]
+foci :: [a] -> [([a], a, [a])]
+foci []     = []
+foci (x:xs) = ([], x, xs) : map (\(ys1, y', ys2) -> (x:ys1, y', ys2)) (foci xs)
 
 -- | Middle element of a list
 --
