@@ -26,6 +26,17 @@ import           Data.Tuple          (swap)
 import           Unsafe.Coerce       (unsafeCoerce)
 
 -- | Y combinator.
+--
+-- >>> :{
+--  let
+--    fibF :: (Int -> Int) -> Int -> Int
+--    fibF _ 0 = 0
+--    fibF _ 1 = 1
+--    fibF f n = f (n - 1) + f (n - 2)
+--  in
+--    y fibF 10
+-- :}
+-- 55
 y :: (a -> a) -> a
 y f = (\x -> f (unsafeCoerce x x)) (\x -> f (unsafeCoerce x x))
 

@@ -10,7 +10,7 @@ jobs:
            - dependency-{{ checksum "utility.cabal" }}
            - dependency
       - run: cabal update
-      - run: HSPEC_OPTIONS=--color cabal test
+      - run: cabal test
       - save_cache:
           key: dependency-{{ checksum "utility.cabal" }}
           paths:
