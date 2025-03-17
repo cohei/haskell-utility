@@ -36,6 +36,10 @@ module Utility
 
     -- * for boolean
     implies,
+
+    -- * Taps
+    tap,
+    tapM,
   )
 where
 
@@ -247,3 +251,18 @@ primeFactors = primeFactors' primes
 -- [1,2,4,7,8,11,14,16,22,28,44,56,77,88,112,154,176,308,616,1232]
 factors :: (Integral a) => a -> [a]
 factors = map product . mapM (map product . inits) . group . primeFactors
+
+-- | Execute side effect and return original value.
+--
+-- >>> "abc" `tap` putStrLn
+-- abc
+-- "abc"
+tap :: (Functor f) => a -> (a -> f b) -> f a
+tap x k = x <$ k x
+
+-- | Monad version of 'tap'.
+--
+-- >>> [1, 2] `tapM` \x -> [(), ()]
+-- [1,1,2,2]
+tapM :: (Monad m) => m a -> (a -> m b) -> m a
+tapM m k = m >>= (`tap` k)
