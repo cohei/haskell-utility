@@ -1,0 +1,24 @@
+name: Build
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up GHC
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.10'
+      - name: Build
+        run: cabal build --enable-tests
+      - name: Run tests
+        run: cabal test
+      - name: Build documentation
+        run:
+          cabal haddock --haddock-hyperlink-source --haddock-output-dir haddock
+      - name: Uplaod documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: Haddock document
+          path: haddock/utility
+          if-no-files-found: error
