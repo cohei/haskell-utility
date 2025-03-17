@@ -228,7 +228,7 @@ middle' (_ : ms) (_ : _ : xs) = middle' ms xs
 -- >>> take 10 primes
 -- [2,3,5,7,11,13,17,19,23,29]
 primes :: (Integral a) => [a]
-primes = 2 : filter (\n -> head (primeFactors n) == n) [3, 5 ..]
+primes = 2 : filter (\n -> primeFactors n == [n]) [3, 5 ..]
 
 -- | List prime factors.
 --
