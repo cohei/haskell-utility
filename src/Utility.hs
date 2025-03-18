@@ -80,10 +80,8 @@ owl = (.) . (.)
 toDigits :: forall a. (Integral a) => a -> a -> [a]
 toDigits base = reverse . unfoldr step
   where
-    step :: (Monad m, Alternative m) => a -> m (a, a)
-    step n = do
-      guard $ n /= 0
-      return $ swap $ divMod n base
+    step :: (Alternative f) => a -> f (a, a)
+    step n = swap (divMod n base) <$ guard (n /= 0)
 
 -- | Convert digits to an integer.
 --
