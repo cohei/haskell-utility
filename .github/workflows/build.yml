@@ -4,9 +4,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.4.0
       - name: Set up GHC
-        uses: haskell-actions/setup@v2
+        uses: haskell-actions/setup@v2.12.1
         with:
           ghc-version: '9.10'
       - name: Build
@@ -16,8 +16,8 @@ jobs:
       - name: Build documentation
         run:
           cabal haddock --haddock-hyperlink-source --haddock-output-dir haddock
-      - name: Uplaod documentation
-        uses: actions/upload-artifact@v4
+      - name: Upload documentation
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: Haddock document
           path: haddock/utility
