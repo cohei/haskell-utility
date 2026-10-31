@@ -17,7 +17,7 @@ jobs:
         run:
           cabal haddock --haddock-hyperlink-source --haddock-output-dir haddock
       - name: Upload documentation
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: Haddock document
           path: haddock/utility
